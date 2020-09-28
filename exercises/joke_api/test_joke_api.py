@@ -30,3 +30,9 @@ def test_get_joke_type_not_int():
     for param in invalid_params:
         with pytest.raises(TypeError):
             get_joke_types(param)
+
+
+def test_get_a_random_joke_basic():
+    res = get_a_random_joke()
+    assert res.status_code == 200
+    assert isinstance(res.json(), dict)
