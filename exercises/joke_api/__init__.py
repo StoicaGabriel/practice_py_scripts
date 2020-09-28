@@ -1,0 +1,4 @@
+from exercises.joke_api.joke_api_task import get_joke_types, get_a_random_joke
+from exercises.joke_api.joke_api_task import get_ten_random_jokes
+from exercises.joke_api.joke_api_task import get_a_random_joke_by_type
+from exercises.joke_api.joke_api_task import get_ten_random_jokes_by_type
