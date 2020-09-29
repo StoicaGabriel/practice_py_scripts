@@ -81,6 +81,15 @@ def test_get_a_random_joke_by_type_invalid_data():
             res = get_a_random_joke_by_type(joke_type=joke_type)
 
 
+def test_get_a_random_joke_by_type_nonexistent_type():
+    """Passing a joke_type that does not exist results in empty list."""
+    # Note: if the joke type does not exist in the api's data, an empty list is
+    # returned instead of return code 404.
+    joke_type = 'nonexistent_joke_type'
+    res = get_a_random_joke_by_type(joke_type=joke_type)
+    assert res.json() == []
+
+
 def test_get_ten_random_jokes_by_type_basic():
     """Basic functionality test for the `get_ten_random_jokes_by_type` function."""
     joke_type = 'general'
@@ -104,3 +113,12 @@ def test_get_ten_random_jokes_by_type_invalid_data():
     for joke_type in invalid_joke_types:
         with pytest.raises(TypeError):
             res = get_ten_random_jokes_by_type(joke_type=joke_type)
+
+
+def test_get_ten_random_jokes_by_type_nonexistent_type():
+    """Passing a joke_type that does not exist results in empty list."""
+    # Note: if the joke type does not exist in the api's data, an empty list is
+    # returned instead of return code 404.
+    joke_type = 'nonexistent_joke_type'
+    res = get_ten_random_jokes_by_type(joke_type=joke_type)
+    assert res.json() == []
