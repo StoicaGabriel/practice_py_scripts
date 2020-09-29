@@ -55,3 +55,9 @@ def test_get_a_random_joke_by_type_basic():
     assert res.status_code == 200
     assert isinstance(res.json(), dict)
     assert res.json()['type'] == joke_type
+
+
+def test_get_a_random_joke_by_type_empty_string():
+    joke_type = ''
+    res = get_a_random_joke_by_type(joke_type=joke_type)
+    assert res.status_code == 404
