@@ -31,12 +31,14 @@ def test_get_joke_types_too_high_int():
         get_joke_types(tries=11)
 
 
-def test_get_joke_types_invalid_data():
+@pytest.mark.parametrize(
+    'param',
+    [None, '', 3.4, tuple(), dict(), list(), set()],
+)
+def test_get_joke_types_invalid_data(param):
     """Anything else than int passed should raise a TypeError."""
-    invalid_params = [None, '', 22, 3.4, tuple(), dict(), list(), set()]
-    for param in invalid_params:
-        with pytest.raises(TypeError):
-            get_joke_types(param)
+    with pytest.raises(TypeError):
+        get_joke_types(param)
 
 
 def test_get_a_random_joke_basic():
@@ -73,12 +75,14 @@ def test_get_a_random_joke_by_type_empty_string():
     assert res.status_code == 404
 
 
-def test_get_a_random_joke_by_type_invalid_data():
+@pytest.mark.parametrize(
+    'joke_type',
+    [None, 22, 3.4, tuple(), dict(), list(), set()],
+)
+def test_get_a_random_joke_by_type_invalid_data(joke_type):
     """Passing anything else other than string as joke_type should raise a TypeError."""
-    invalid_joke_types = [None, 22, 3.4, tuple(), dict(), list(), set()]
-    for joke_type in invalid_joke_types:
-        with pytest.raises(TypeError):
-            res = get_a_random_joke_by_type(joke_type=joke_type)
+    with pytest.raises(TypeError):
+        res = get_a_random_joke_by_type(joke_type=joke_type)
 
 
 def test_get_a_random_joke_by_type_nonexistent_type():
@@ -107,12 +111,14 @@ def test_get_ten_random_jokes_by_type_empty_string():
     assert res.status_code == 404
 
 
-def test_get_ten_random_jokes_by_type_invalid_data():
+@pytest.mark.parametrize(
+    'joke_type',
+    [None, 22, 3.4, tuple(), dict(), list(), set()],
+)
+def test_get_ten_random_jokes_by_type_invalid_data(joke_type):
     """Passing anything else other than string as joke_type should raise a TypeError."""
-    invalid_joke_types = [None, 22, 3.4, tuple(), dict(), list(), set()]
-    for joke_type in invalid_joke_types:
-        with pytest.raises(TypeError):
-            res = get_ten_random_jokes_by_type(joke_type=joke_type)
+    with pytest.raises(TypeError):
+        res = get_ten_random_jokes_by_type(joke_type=joke_type)
 
 
 def test_get_ten_random_jokes_by_type_nonexistent_type():
