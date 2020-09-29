@@ -128,13 +128,13 @@ def do_everything(joke_types: list):
         print('\n')
 
     # Task 3:
-    chosen_type = random.randint(0, len(joke_types) - 1)
+    chosen_joke_type = random.randint(0, len(joke_types) - 1)
 
-    url = base_url + '/jokes' + '/' + joke_types[chosen_type] + '/ten'
+    url = base_url + '/jokes' + '/' + joke_types[chosen_joke_type] + '/ten'
     response = requests.get(url=url)
 
     for joke in response.json():
-        if joke['type'] != joke_types[chosen_type]:
+        if joke['type'] != joke_types[chosen_joke_type]:
             raise ResponseError('joke type received differs from the one requested')
 
     # Task 4 (matter of choice: print only even id jokes):
