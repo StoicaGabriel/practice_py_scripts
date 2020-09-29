@@ -53,8 +53,10 @@ def test_get_a_random_joke_by_type_basic():
     joke_type = 'general'
     res = get_a_random_joke_by_type(joke_type=joke_type)
     assert res.status_code == 200
-    assert isinstance(res.json(), dict)
-    assert res.json()['type'] == joke_type
+    # For some reason requesting a single joke through the /jokes endpoint
+    # will return a list of a single dict element containing the joke.
+    assert isinstance(res.json(), list)
+    assert res.json()[0]['type'] == joke_type
 
 
 def test_get_a_random_joke_by_type_empty_string():
