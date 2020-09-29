@@ -20,18 +20,23 @@ options:
  - /jokes/{type}/ten
 where {type} is to be replaced by the desired joke type (e.g. "programming",
 "general" or "knock-knock".
+A `.json()` call on the response variable will return either a dict item or a
+list of dict items, depending of the endpoint. `/jokes/...` will always return
+a list type, no matter how many jokes are requested. `/random_joke` endpoint
+will always return a dict object containing one joke.
 """
 
 
 class ResponseError(Exception):
+    # Custom exception for bad response. Currently not affecting any tests.
     pass
 
 
 def get_joke_types(tries: int) -> list:
     """Attempt to find all the possible joke types by getting 10 random jokes
     for `tries` number of times from the api and recording the newly encountered
-    tags. The tries must be at least 1 and not greater than 10 (there is no point
-    in adding types only present for very few number of times).
+    tags. The tries must be at least 1 and not greater than 10 (10 tries are
+    enough to obtain the most popular tags).
     """
     if tries < 1 or tries > 10:
         raise ValueError('number of tries must be between 1 and 10')
