@@ -5,13 +5,14 @@ from exercises.joke_api import get_a_random_joke_by_type, get_ten_random_jokes_b
 
 
 def test_get_joke_type_basic():
+    """Basic functionality test for the `get_joke_type` function."""
     joke_types = ''
     with open('joke_types.txt', 'r') as f:
         for line in f:
             joke_types += line
     # Note: there is always a blank at the end of the file so no `.split(' ')`.
     expected = joke_types.split()
-    joke_types_lst = get_joke_types(10)
+    joke_types_lst = get_joke_types(tries=10)
     # There are definitely jokes registered so the list is expected to have at
     # least one element.
     assert joke_types_lst != []
@@ -19,16 +20,19 @@ def test_get_joke_type_basic():
 
 
 def test_get_joke_type_too_low_int():
+    """joke_type lower than 1 should raise a ValueError."""
     with pytest.raises(ValueError):
         get_joke_types(tries=0)
 
 
 def test_get_joke_type_too_high_int():
+    """joke_type higher than 10 should also raise a ValueError."""
     with pytest.raises(ValueError):
         get_joke_types(tries=11)
 
 
 def test_get_joke_type_not_int():
+    """Anything else than int passed should raise a TypeError."""
     invalid_params = [None, '', 2.2, [], {}, ()]
     for param in invalid_params:
         with pytest.raises(TypeError):
@@ -36,12 +40,14 @@ def test_get_joke_type_not_int():
 
 
 def test_get_a_random_joke_basic():
+    """Basic functionality test for the `get_a_random_joke` function."""
     res = get_a_random_joke()
     assert res.status_code == 200
     assert isinstance(res.json(), dict)
 
 
 def test_get_ten_random_jokes_basic():
+    """Basic functionality test for the `get_ten_random_jokes` function."""
     res = get_ten_random_jokes()
     assert res.status_code == 200
     assert isinstance(res.json(), list)
@@ -50,6 +56,7 @@ def test_get_ten_random_jokes_basic():
 
 
 def test_get_a_random_joke_by_type_basic():
+    """Basic functionality test for the `get_a_random_joke_by_type` function."""
     joke_type = 'general'
     res = get_a_random_joke_by_type(joke_type=joke_type)
     assert res.status_code == 200
@@ -60,12 +67,14 @@ def test_get_a_random_joke_by_type_basic():
 
 
 def test_get_a_random_joke_by_type_empty_string():
+    """Passing an empty string as joke_type should result in 404 status code."""
     joke_type = ''
     res = get_a_random_joke_by_type(joke_type=joke_type)
     assert res.status_code == 404
 
 
 def test_get_a_random_joke_by_type_invalid_data():
+    """Passing anything else other than string as joke_type should raise a TypeError."""
     invalid_joke_types = [None, 22, 3.4, tuple(), dict(), list(), set()]
     for joke_type in invalid_joke_types:
         with pytest.raises(TypeError):
@@ -73,6 +82,7 @@ def test_get_a_random_joke_by_type_invalid_data():
 
 
 def test_get_ten_random_jokes_by_type_basic():
+    """Basic functionality test for the `get_ten_random_jokes_by_type` function."""
     joke_type = 'general'
     res = get_ten_random_jokes_by_type(joke_type=joke_type)
     assert res.status_code == 200
@@ -82,12 +92,14 @@ def test_get_ten_random_jokes_by_type_basic():
 
 
 def test_get_ten_random_jokes_by_type_empty_string():
+    """Passing an empty string as joke_type should result in 404 status code."""
     joke_type = ''
     res = get_ten_random_jokes_by_type(joke_type=joke_type)
     assert res.status_code == 404
 
 
 def test_get_ten_random_jokes_by_type_invalid_data():
+    """Passing anything else other than string as joke_type should raise a TypeError."""
     invalid_joke_types = [None, 22, 3.4, tuple(), dict(), list(), set()]
     for joke_type in invalid_joke_types:
         with pytest.raises(TypeError):
