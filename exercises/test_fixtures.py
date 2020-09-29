@@ -3,6 +3,7 @@ import pytest
 
 @pytest.fixture()
 def fruits_basket_dict() -> dict:
+    """Dummy fixture"""
     basket_dict = {
         'fruits': 'apples',
         'quantity': 10,
@@ -13,6 +14,7 @@ def fruits_basket_dict() -> dict:
 
 @pytest.fixture()
 def car_dict() -> dict:
+    """Dummy fixture"""
     car_dict = {
         'color': 'red',
         'km': 1000,
@@ -21,23 +23,30 @@ def car_dict() -> dict:
     return car_dict
 
 
-@pytest.fixture()
+# Note: 'module' scope causes the fixture to initialise only once per module run.
+@pytest.fixture(scope='module')
 def names_list() -> list:
+    """Dummy fixture"""
     names_list = ['Andrew', 'John', 'Mike', 'Sally', 'Tyrone']
     return names_list
 
 
 def test_fruits_basket(fruits_basket_dict):
+    """Dummy test"""
     assert fruits_basket_dict['fruits'] == 'apples'
 
 
 def test_car(car_dict):
+    """Dummy test"""
     assert car_dict['km'] < 10_000
 
 
 def test_names_lst(names_list):
+    """Dummy test"""
     assert names_list[1] == 'John'
 
 
+# This test also uses the names_list fixture.
 def test_names_lst_len(names_list):
+    """Dummy test"""
     assert len(names_list) == 5
