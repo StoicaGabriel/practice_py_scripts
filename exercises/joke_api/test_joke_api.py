@@ -36,3 +36,11 @@ def test_get_a_random_joke_basic():
     res = get_a_random_joke()
     assert res.status_code == 200
     assert isinstance(res.json(), dict)
+
+
+def test_get_ten_random_jokes_basic():
+    res = get_ten_random_jokes()
+    assert res.status_code == 200
+    assert isinstance(res.json(), list)
+    for item in res.json():
+        assert isinstance(item, dict)
