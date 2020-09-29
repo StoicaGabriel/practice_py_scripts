@@ -77,3 +77,9 @@ def test_get_ten_random_jokes_by_type_basic():
     assert isinstance(res.json(), list)
     for item in res.json():
         assert item['type'] == joke_type
+
+
+def test_get_ten_random_jokes_by_type_empty_string():
+    joke_type = ''
+    res = get_ten_random_jokes_by_type(joke_type=joke_type)
+    assert res.status_code == 404
