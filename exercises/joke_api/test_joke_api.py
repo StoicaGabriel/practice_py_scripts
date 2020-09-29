@@ -20,12 +20,12 @@ def test_get_joke_type_basic():
 
 def test_get_joke_type_too_low_int():
     with pytest.raises(ValueError):
-        get_joke_types(0)
+        get_joke_types(tries=0)
 
 
 def test_get_joke_type_too_high_int():
     with pytest.raises(ValueError):
-        get_joke_types(11)
+        get_joke_types(tries=11)
 
 
 def test_get_joke_type_not_int():
@@ -47,3 +47,11 @@ def test_get_ten_random_jokes_basic():
     assert isinstance(res.json(), list)
     for item in res.json():
         assert isinstance(item, dict)
+
+
+def test_get_a_random_joke_by_type_basic():
+    joke_type = 'general'
+    res = get_a_random_joke_by_type(joke_type=joke_type)
+    assert res.status_code == 200
+    assert isinstance(res.json(), dict)
+    assert res.json()['type'] == joke_type
