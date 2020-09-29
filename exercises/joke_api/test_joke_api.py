@@ -4,7 +4,7 @@ from exercises.joke_api import get_a_random_joke, get_ten_random_jokes
 from exercises.joke_api import get_a_random_joke_by_type, get_ten_random_jokes_by_type
 
 
-def test_get_joke_type_basic():
+def test_get_joke_types_basic():
     """Basic functionality test for the `get_joke_type` function."""
     joke_types = ''
     with open('joke_types.txt', 'r') as f:
@@ -19,19 +19,19 @@ def test_get_joke_type_basic():
     assert expected == joke_types_lst
 
 
-def test_get_joke_type_too_low_int():
+def test_get_joke_types_too_low_int():
     """joke_type lower than 1 should raise a ValueError."""
     with pytest.raises(ValueError):
         get_joke_types(tries=0)
 
 
-def test_get_joke_type_too_high_int():
+def test_get_joke_types_too_high_int():
     """joke_type higher than 10 should also raise a ValueError."""
     with pytest.raises(ValueError):
         get_joke_types(tries=11)
 
 
-def test_get_joke_type_not_int():
+def test_get_joke_types_invalid_data():
     """Anything else than int passed should raise a TypeError."""
     invalid_params = [None, '', 2.2, [], {}, ()]
     for param in invalid_params:
