@@ -61,3 +61,10 @@ def test_get_a_random_joke_by_type_empty_string():
     joke_type = ''
     res = get_a_random_joke_by_type(joke_type=joke_type)
     assert res.status_code == 404
+
+
+def test_get_a_random_joke_by_type_invalid_data():
+    invalid_joke_types = [None, 22, 3.4, tuple(), dict(), list(), set()]
+    for joke_type in invalid_joke_types:
+        with pytest.raises(TypeError):
+            res = get_a_random_joke_by_type(joke_type=joke_type)
