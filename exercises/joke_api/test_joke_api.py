@@ -33,7 +33,7 @@ def test_get_joke_types_too_high_int():
 
 def test_get_joke_types_invalid_data():
     """Anything else than int passed should raise a TypeError."""
-    invalid_params = [None, '', 2.2, [], {}, ()]
+    invalid_params = [None, '', 22, 3.4, tuple(), dict(), list(), set()]
     for param in invalid_params:
         with pytest.raises(TypeError):
             get_joke_types(param)
