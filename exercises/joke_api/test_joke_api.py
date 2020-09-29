@@ -32,13 +32,13 @@ def test_get_joke_types_too_high_int():
 
 
 @pytest.mark.parametrize(
-    'param',
+    'tries',
     [None, '', 3.4, tuple(), dict(), list(), set()],
 )
-def test_get_joke_types_invalid_data(param):
+def test_get_joke_types_invalid_data(tries):
     """Anything else than int passed should raise a TypeError."""
     with pytest.raises(TypeError):
-        get_joke_types(param)
+        get_joke_types(tries)
 
 
 def test_get_a_random_joke_basic():
