@@ -62,7 +62,6 @@ def get_a_random_joke() -> requests.models.Response:
     """Request a random joke from the joke_api."""
     url = 'https://official-joke-api.appspot.com/random_joke'
     response = requests.get(url=url)
-    # print_response(response.json())
 
     return response
 
@@ -72,7 +71,6 @@ def get_ten_random_jokes() -> requests.models.Response:
     """Request ten random jokes from the joke_api."""
     url = 'https://official-joke-api.appspot.com/random_ten'
     response = requests.get(url=url)
-    # print_response(response.json())
 
     return response
 
@@ -84,7 +82,6 @@ def get_a_random_joke_by_type(joke_type: str) -> requests.models.Response:
         raise TypeError('joke_type must be a string')
     url = 'https://official-joke-api.appspot.com/jokes' + '/' + joke_type + '/random'
     response = requests.get(url=url)
-    # print_response(response.json())
 
     return response
 
@@ -96,7 +93,6 @@ def get_ten_random_jokes_by_type(joke_type: str) -> requests.models.Response:
         raise TypeError('joke_type must be a string')
     url = 'https://official-joke-api.appspot.com/jokes' + '/' + joke_type + '/ten'
     response = requests.get(url=url)
-    # print_response(response.json())
 
     return response
 
@@ -147,6 +143,7 @@ def do_everything(joke_types: list):
 
 
 # Task 2:
+# This is the standard pretty_print function, but with some parameter checking.
 def pretty_print_response(content):
     """Print the responses of get requests with pprint."""
     if isinstance(content, list):
@@ -158,6 +155,7 @@ def pretty_print_response(content):
         raise TypeError('content must be either a dict or a list of dicts')
 
 
+# This is the customised printing function.
 def print_response(content):
     """Print the content of a response to a joke_api request in a more human-
     readable form. It is advised to supply the response in response.json() form.
