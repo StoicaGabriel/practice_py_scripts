@@ -25,10 +25,12 @@ def car_dict() -> dict:
 
 # Note: 'module' scope causes the fixture to initialise only once per module run.
 @pytest.fixture(scope='module')
-def names_list() -> list:
+def names_list():
     """Dummy fixture"""
     names_list = ['Andrew', 'John', 'Mike', 'Sally', 'Tyrone']
-    return names_list
+    print('Yield, tests start.')
+    yield names_list
+    print('Tests ended')
 
 
 def test_fruits_basket(fruits_basket_dict):
