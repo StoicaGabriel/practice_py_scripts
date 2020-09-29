@@ -68,3 +68,12 @@ def test_get_a_random_joke_by_type_invalid_data():
     for joke_type in invalid_joke_types:
         with pytest.raises(TypeError):
             res = get_a_random_joke_by_type(joke_type=joke_type)
+
+
+def test_get_ten_random_jokes_by_type_basic():
+    joke_type = 'general'
+    res = get_ten_random_jokes_by_type(joke_type=joke_type)
+    assert res.status_code == 200
+    assert isinstance(res.json(), list)
+    for item in res.json():
+        assert item['type'] == joke_type
