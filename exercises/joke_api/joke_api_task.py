@@ -1,7 +1,6 @@
 import requests
-import pprint
 import random
-from typing import Optional
+import pprint
 
 """How joke_api endpoints work
 A GET request at "https://official-joke-api.appspot.com/random_joke" or at
