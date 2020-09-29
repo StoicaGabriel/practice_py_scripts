@@ -12,6 +12,9 @@ def test_get_joke_type_basic():
     # Note: there is always a blank at the end of the file so no `.split(' ')`.
     expected = joke_types.split()
     joke_types_lst = get_joke_types(10)
+    # There are definitely jokes registered so the list is expected to have at
+    # least one element.
+    assert joke_types_lst != []
     assert expected == joke_types_lst
 
 
