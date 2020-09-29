@@ -58,7 +58,7 @@ def get_joke_types(tries: int) -> list:
 
 
 # Task 1:
-def get_a_random_joke():
+def get_a_random_joke() -> requests.models.Response:
     """Request a random joke from the joke_api."""
     url = 'https://official-joke-api.appspot.com/random_joke'
     response = requests.get(url=url)
@@ -68,7 +68,7 @@ def get_a_random_joke():
 
 
 # Task 1:
-def get_ten_random_jokes():
+def get_ten_random_jokes() -> requests.models.Response:
     """Request ten random jokes from the joke_api."""
     url = 'https://official-joke-api.appspot.com/random_ten'
     response = requests.get(url=url)
@@ -78,7 +78,7 @@ def get_ten_random_jokes():
 
 
 # Task 1:
-def get_a_random_joke_by_type(joke_type: str):
+def get_a_random_joke_by_type(joke_type: str) -> requests.models.Response:
     """Request a random joke of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
@@ -90,7 +90,7 @@ def get_a_random_joke_by_type(joke_type: str):
 
 
 # Task 1:
-def get_ten_random_jokes_by_type(joke_type: str):
+def get_ten_random_jokes_by_type(joke_type: str) -> requests.models.Response:
     """Request ten random jokes of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
