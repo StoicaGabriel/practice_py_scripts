@@ -1,3 +1,4 @@
+import sys
 import pytest
 
 
@@ -20,3 +21,17 @@ def test_greeting(capsys: pytest.fixture):
     out, err = capsys.readouterr()
     assert out == 'Hi, John\nHi, Mark\n'
     assert err == ''
+
+
+def attempt_stderr(error: str):
+    """Force-print a sys.stderr to be captured by capsys."""
+    print('There was an error while printing: {}'.format(error), file=sys.stderr)
+
+
+def test_attempt_stderr(capsys):
+    """Capture the sys.stderr which appears during test."""
+    attempt_stderr('User-created Error')
+    out, err = capsys.readouterr()
+
+    assert out == ''
+    assert 'User-created Error' in err
