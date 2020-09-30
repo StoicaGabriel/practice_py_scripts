@@ -35,3 +35,10 @@ def test_attempt_stderr(capsys):
 
     assert out == ''
     assert 'User-created Error' in err
+
+
+def test_capsys_disabled(capsys):
+    """Text can be printed during capsys with capsys.disabled()"""
+    with capsys.disabled():
+        print('\nThis is always printed.')
+    print('This print is being captured.')
