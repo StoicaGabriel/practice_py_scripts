@@ -66,6 +66,15 @@ def db_with_multi_per_owner(tasks_db, tasks_mult_per_owner):
         tasks.add(t)
 
 
+def pytest_adoption(parser):
+    """Turn nice features on with the --nice option."""
+    group = parser.getgroup('nice')
+    group.addoption(
+        '--nice',
+        action='store_true',
+        help='nice: turn failures into opportunities.')
+
+
 def pytest_report_header():
     """Thank tester for running tests."""
     return "Thanks for running the tests."
