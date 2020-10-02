@@ -36,7 +36,7 @@ class ResponseError(Exception):
     pass
 
 
-def get_popular_joke_types(tries: int, with_update: bool = False) -> list:
+def get_popular_joke_types(tries: int, update_file: bool = False) -> list:
     """Attempt to find all the possible joke types by getting 10 random jokes
     for `tries` number of times from the api and recording the newly encountered
     tags. The tries must be at least 1 and not greater than 10 (10 tries are
@@ -50,7 +50,7 @@ def get_popular_joke_types(tries: int, with_update: bool = False) -> list:
         raise ValueError('number of tries must be between 1 and 10')
     if not isinstance(tries, int):
         raise TypeError('number of tries must be of type int')
-    if not isinstance(with_update, bool):
+    if not isinstance(update_file, bool):
         raise TypeError('`only_read` parameter can be either `True` or `False`')
 
     with open('joke_types.txt', 'r+') as f:
@@ -59,7 +59,7 @@ def get_popular_joke_types(tries: int, with_update: bool = False) -> list:
             joke_types += line
         # Naming is bad, but making another list via `.copy()` is not efficient.
         current_joke_types_lst = joke_types.split()
-        if not with_update:
+        if not update_file:
             # Just change the global with what was in the file and exit.
             joke_types_lst = [joke for joke in current_joke_types_lst]
             # Will actually "optionally" return the list in case it's needed
@@ -202,7 +202,7 @@ def print_response(content):
 
 if __name__ == '__main__':
     # Standard setup in case the file is empty or it's nonexistent.
-    get_popular_joke_types(tries=10, with_update=True)
+    get_popular_joke_types(tries=10, update_file=True)
     chosen_type = random.randint(0, len(joke_types_lst) - 1)
 
     # Task 1 & 2:
