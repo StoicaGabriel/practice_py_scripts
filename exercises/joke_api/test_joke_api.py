@@ -16,7 +16,7 @@ def test_get_popular_joke_types_basic():
             joke_types += line
     # Note: there is always a blank at the end of the file, so no `.split(' ')`.
     expected = joke_types.split()
-    joke_types_lst = get_popular_joke_types(tries=10)
+    joke_types_lst = get_popular_joke_types(update_file=False)
     # There are definitely jokes registered, so the list is expected to have at
     # least one element.
     assert joke_types_lst != []
@@ -39,10 +39,20 @@ def test_get_popular_joke_types_too_high_int():
     'tries',
     [None, '', 3.4, tuple(), dict(), list(), set()],
 )
-def test_get_popular_joke_types_invalid_data(tries):
-    """Anything else than int passed should raise a TypeError."""
+def test_get_popular_joke_types_tries_invalid_data(tries):
+    """Anything else than int passed to tries should raise a TypeError."""
     with pytest.raises(TypeError):
-        get_popular_joke_types(tries)
+        get_popular_joke_types(tries=tries)
+
+
+@pytest.mark.parametrize(
+    'update_file',
+    [None, '', 22, 3.4, tuple(), dict(), list(), set()],
+)
+def test_get_popular_joke_types_update_file_invalid_data(update_file):
+    """Anything else than bool passed to update_file should raise a TypeError."""
+    with pytest.raises(TypeError):
+        get_popular_joke_types(update_file=update_file)
 
 
 def test_get_a_random_joke_basic():
