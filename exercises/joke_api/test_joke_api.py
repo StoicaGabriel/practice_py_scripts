@@ -14,10 +14,10 @@ def test_get_popular_joke_types_basic():
     with open('joke_types.txt', 'r') as f:
         for line in f:
             joke_types += line
-    # Note: there is always a blank at the end of the file so no `.split(' ')`.
+    # Note: there is always a blank at the end of the file, so no `.split(' ')`.
     expected = joke_types.split()
     joke_types_lst = get_popular_joke_types(tries=10)
-    # There are definitely jokes registered so the list is expected to have at
+    # There are definitely jokes registered, so the list is expected to have at
     # least one element.
     assert joke_types_lst != []
     assert expected == joke_types_lst
@@ -66,7 +66,7 @@ def test_get_a_random_joke_by_type_basic():
     joke_type = 'general'
     res = get_a_random_joke_by_type(joke_type=joke_type)
     assert res.status_code == 200
-    # For some reason requesting a single joke through the /jokes endpoint
+    # For some reason, requesting a single joke through the /jokes endpoint
     # will return a list of a single dict element containing the joke.
     assert isinstance(res.json(), list)
     assert res.json()[0]['type'] == joke_type
