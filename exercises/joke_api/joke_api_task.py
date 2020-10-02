@@ -46,10 +46,12 @@ def get_popular_joke_types(tries: int = 10, update_file: bool = False) -> list:
     """
     global joke_types
 
+    if not isinstance(tries, int) or isinstance(tries, bool):
+        # Bool is considered int by Python, but in program's logic the parameter
+        # can only be int.
+        raise TypeError('number of tries must be of type int')
     if tries < 1 or tries > 10:
         raise ValueError('number of tries must be between 1 and 10')
-    if not isinstance(tries, int):
-        raise TypeError('number of tries must be of type int')
     if not isinstance(update_file, bool):
         raise TypeError('`only_read` parameter can be either `True` or `False`')
 
