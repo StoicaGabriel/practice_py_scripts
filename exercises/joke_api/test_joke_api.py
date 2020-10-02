@@ -37,7 +37,7 @@ def test_get_popular_joke_types_too_high_int():
 
 @pytest.mark.parametrize(
     'tries',
-    [None, '', 3.4, tuple(), dict(), list(), set()],
+    [None, '', 3.4, tuple(), dict(), list(), set(), False],
 )
 def test_get_popular_joke_types_tries_invalid_data(tries):
     """Anything else than int passed to tries should raise a TypeError."""
@@ -91,7 +91,7 @@ def test_get_a_random_joke_by_type_empty_string():
 
 @pytest.mark.parametrize(
     'joke_type',
-    [None, 22, 3.4, tuple(), dict(), list(), set()],
+    [None, 22, 3.4, tuple(), dict(), list(), set(), False],
 )
 def test_get_a_random_joke_by_type_invalid_data(joke_type):
     """Passing anything else other than string as joke_type should raise a TypeError."""
@@ -127,7 +127,7 @@ def test_get_ten_random_jokes_by_type_empty_string():
 
 @pytest.mark.parametrize(
     'joke_type',
-    [None, 22, 3.4, tuple(), dict(), list(), set()],
+    [None, 22, 3.4, tuple(), dict(), list(), set(), False],
 )
 def test_get_ten_random_jokes_by_type_invalid_data(joke_type):
     """Passing anything else other than string as joke_type should raise a TypeError."""
