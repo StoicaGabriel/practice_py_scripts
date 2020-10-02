@@ -1,10 +1,10 @@
 import pytest
-from exercises.joke_api import get_joke_types
+from exercises.joke_api import get_popular_joke_types
 from exercises.joke_api import get_a_random_joke, get_ten_random_jokes
 from exercises.joke_api import get_a_random_joke_by_type, get_ten_random_jokes_by_type
 
 
-def test_get_joke_types_basic():
+def test_get_popular_joke_types_basic():
     """Basic functionality test for the `get_joke_type` function."""
     joke_types = ''
     with open('joke_types.txt', 'r') as f:
@@ -12,33 +12,33 @@ def test_get_joke_types_basic():
             joke_types += line
     # Note: there is always a blank at the end of the file so no `.split(' ')`.
     expected = joke_types.split()
-    joke_types_lst = get_joke_types(tries=10)
+    joke_types_lst = get_popular_joke_types(tries=10)
     # There are definitely jokes registered so the list is expected to have at
     # least one element.
     assert joke_types_lst != []
     assert expected == joke_types_lst
 
 
-def test_get_joke_types_too_low_int():
+def test_get_popular_joke_types_too_low_int():
     """joke_type lower than 1 should raise a ValueError."""
     with pytest.raises(ValueError):
-        get_joke_types(tries=0)
+        get_popular_joke_types(tries=0)
 
 
-def test_get_joke_types_too_high_int():
+def test_get_popular_joke_types_too_high_int():
     """joke_type higher than 10 should also raise a ValueError."""
     with pytest.raises(ValueError):
-        get_joke_types(tries=11)
+        get_popular_joke_types(tries=11)
 
 
 @pytest.mark.parametrize(
     'tries',
     [None, '', 3.4, tuple(), dict(), list(), set()],
 )
-def test_get_joke_types_invalid_data(tries):
+def test_get_popular_joke_types_invalid_data(tries):
     """Anything else than int passed should raise a TypeError."""
     with pytest.raises(TypeError):
-        get_joke_types(tries)
+        get_popular_joke_types(tries)
 
 
 def test_get_a_random_joke_basic():

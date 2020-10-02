@@ -35,7 +35,7 @@ class ResponseError(Exception):
     pass
 
 
-def get_joke_types(tries: int) -> list:
+def get_popular_joke_types(tries: int) -> list:
     """Attempt to find all the possible joke types by getting 10 random jokes
     for `tries` number of times from the api and recording the newly encountered
     tags. The tries must be at least 1 and not greater than 10 (10 tries are
@@ -185,7 +185,7 @@ def print_response(content):
 
 
 if __name__ == '__main__':
-    all_joke_types = get_joke_types(tries=10)
+    all_joke_types = get_popular_joke_types(tries=10)
     chosen_type = random.randint(0, len(all_joke_types) - 1)
 
     # Task 1 & 2:
