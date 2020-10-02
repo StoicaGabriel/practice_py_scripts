@@ -5,7 +5,11 @@ from exercises.joke_api import get_a_random_joke_by_type, get_ten_random_jokes_b
 
 
 def test_get_popular_joke_types_basic():
-    """Basic functionality test for the `get_joke_type` function."""
+    """Basic functionality test for the `get_joke_type` function. This test
+    assumes that the joke_types.txt document has been recently updated. There is
+    a slight chance that there are categories which appear very few times and
+    have not been registered via the `get_popular_joke_types()` method, which
+    will cause the test to fail."""
     joke_types = ''
     with open('joke_types.txt', 'r') as f:
         for line in f:
