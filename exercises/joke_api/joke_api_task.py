@@ -26,6 +26,9 @@ a list type, no matter how many jokes are requested. `/random_joke` endpoint
 will always return a dict object containing one joke.
 """
 
+# Global vars
+base_url = 'https://official-joke-api.appspot.com'
+
 
 class ResponseError(Exception):
     # Custom exception for bad response. Currently not affecting any tests.
@@ -49,7 +52,7 @@ def get_joke_types(tries: int) -> list:
             joke_types += line
         joke_types_lst = joke_types.split()
 
-        random_ten = requests.get(url='https://official-joke-api.appspot.com/random_ten')
+        random_ten = requests.get(url=f'{base_url}/random_ten')
         jokes = random_ten.json()
 
         for i in range(tries):
@@ -64,7 +67,7 @@ def get_joke_types(tries: int) -> list:
 # Task 1:
 def get_a_random_joke() -> requests.models.Response:
     """Request a random joke from the joke_api."""
-    url = 'https://official-joke-api.appspot.com/random_joke'
+    url = f'{base_url}/random_joke'
     response = requests.get(url=url)
 
     return response
@@ -73,7 +76,7 @@ def get_a_random_joke() -> requests.models.Response:
 # Task 1:
 def get_ten_random_jokes() -> requests.models.Response:
     """Request ten random jokes from the joke_api."""
-    url = 'https://official-joke-api.appspot.com/random_ten'
+    url = f'{base_url}/random_ten'
     response = requests.get(url=url)
 
     return response
@@ -84,7 +87,7 @@ def get_a_random_joke_by_type(joke_type: str) -> requests.models.Response:
     """Request a random joke of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
-    url = 'https://official-joke-api.appspot.com/jokes' + '/' + joke_type + '/random'
+    url = f'{base_url}/jokes/{joke_type}/random'
     response = requests.get(url=url)
 
     return response
@@ -95,7 +98,7 @@ def get_ten_random_jokes_by_type(joke_type: str) -> requests.models.Response:
     """Request ten random jokes of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
-    url = 'https://official-joke-api.appspot.com/jokes' + '/' + joke_type + '/ten'
+    url = f'{base_url}/jokes/{joke_type}/ten'
     response = requests.get(url=url)
 
     return response
@@ -104,17 +107,16 @@ def get_ten_random_jokes_by_type(joke_type: str) -> requests.models.Response:
 def do_everything(joke_types: list):
     """Function which does everything task-related, except the better printing.
     """
-    base_url = 'https://official-joke-api.appspot.com'
     endpoints = ['random_joke', 'random_ten', 'jokes']
 
     # Task 1:
     print('')
     for endpoint in endpoints:
-        url = base_url + '/' + endpoint
+        url = f'{base_url}/{endpoint}'
         if endpoint == 'jokes':
             url += '/programming'
-            url_one = url + '/random'
-            url_ten = url + '/ten'
+            url_one = f'{url}/random'
+            url_ten = f'{url}/ten'
 
             response_one = requests.get(url=url_one)
             response_ten = requests.get(url=url_ten)
@@ -130,7 +132,7 @@ def do_everything(joke_types: list):
     # Task 3:
     chosen_joke_type = random.randint(0, len(joke_types) - 1)
 
-    url = base_url + '/jokes' + '/' + joke_types[chosen_joke_type] + '/ten'
+    url = f'{base_url}/jokes/{joke_types[chosen_joke_type]}/ten'
     response = requests.get(url=url)
 
     for joke in response.json():
@@ -138,7 +140,7 @@ def do_everything(joke_types: list):
             raise ResponseError('joke type received differs from the one requested')
 
     # Task 4 (matter of choice: print only even id jokes):
-    url = base_url + '/' + endpoints[1]
+    url = f'{base_url}/{endpoints[1]}'
     response = requests.get(url=url)
 
     for joke in response.json():
@@ -168,16 +170,16 @@ def print_response(content):
         for item in content:
             # Note: knock-knock jokes are only 5.
             if item['setup'][-1] == '?' and item['type'] != 'knock-knock':
-                print('Q: ' + item['setup'])
-                print('A: ' + item['punchline'], '\n')
+                print(f'Q: {item["setup"]}')
+                print(f'A: {item["punchline"]}\n')
             else:
-                print(item['setup'] + ' ' + item['punchline'], '\n')
-    elif isinstance(content, dict):
+                print(f'{item["setup"]} {item["punchline"]} \n')
+    elif isinstance(content, dict) and content['type'] != 'knock-knock':
         if content['setup'][-1] == '?':
-            print('Q: ' + content['setup'])
-            print('A: ' + content['punchline'], '\n')
+            print(f'Q: {content["setup"]}')
+            print(f'A: {content["punchline"]}\n')
         else:
-            print(content['setup'] + ' ' + content['punchline'], '\n')
+            print(f'{content["setup"]} {content["punchline"]}\n')
     else:
         raise TypeError('content must be either a dict or a list of dicts')
 
@@ -214,5 +216,5 @@ if __name__ == '__main__':
     res = get_ten_random_jokes()
     for jk in res.json():
         if int(jk['id']) % 2 == 0:
-            print('Joke\'s id: ', jk['id'])
+            print(f'Joke\'s id: {jk["id"]}')
             print_response(jk)
