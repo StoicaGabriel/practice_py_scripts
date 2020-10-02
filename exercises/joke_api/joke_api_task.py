@@ -66,11 +66,10 @@ def get_popular_joke_types(tries: int, update_file: bool = False) -> list:
             # outside of module (e.g. tests).
             return joke_types
         # Otherwise continue with actually updating the file AND changing the global.
-        # TODO: this is a bug => fix
-        random_ten = requests.get(url=f'{base_url}/random_ten')
-        jokes = random_ten.json()
 
         for i in range(tries):
+            random_ten = requests.get(url=f'{base_url}/random_ten')
+            jokes = random_ten.json()
             for joke in jokes:
                 if joke['type'] not in current_joke_types_lst:
                     f.write(joke['type'] + ' ')
@@ -202,7 +201,9 @@ def print_response(content):
 
 if __name__ == '__main__':
     # Standard setup in case the file is empty or it's nonexistent.
-    get_popular_joke_types(tries=10, update_file=True)
+    # Only use update_file=True when actually needed. It takes a while to update
+    # the file.
+    get_popular_joke_types(tries=1, update_file=False)
     chosen_type = random.randint(0, len(joke_types) - 1)
 
     # Task 1 & 2:
