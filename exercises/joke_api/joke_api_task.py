@@ -27,8 +27,8 @@ will always return a dict object containing one joke.
 """
 
 # Global vars
-base_url = 'https://official-joke-api.appspot.com'
-joke_types = []
+BASE_URL = 'https://official-joke-api.appspot.com'
+JOKE_TYPES = []
 
 
 class ResponseError(Exception):
@@ -44,7 +44,7 @@ def get_popular_joke_types(tries: int = 10, update_file: bool = False) -> list:
     If `only_read` is True, then it updates the `joke_type_lst` global var with
     what it currently finds in the file.
     """
-    global joke_types
+    global JOKE_TYPES
 
     if not isinstance(tries, int) or isinstance(tries, bool):
         # Bool is considered int by Python, but in program's logic the parameter
@@ -56,35 +56,35 @@ def get_popular_joke_types(tries: int = 10, update_file: bool = False) -> list:
         raise TypeError('`only_read` parameter can be either `True` or `False`')
 
     with open('joke_types.txt', 'r+') as f:
-        joke_types = ''
+        JOKE_TYPES = ''
         for line in f:
-            joke_types += line
+            JOKE_TYPES += line
         # Naming is bad, but making another list via `.copy()` is not efficient.
-        current_joke_types_lst = joke_types.split()
+        current_joke_types_lst = JOKE_TYPES.split()
         if not update_file:
             # Just change the global with what was in the file and exit.
-            joke_types = [joke for joke in current_joke_types_lst]
+            JOKE_TYPES = [joke for joke in current_joke_types_lst]
             # Will actually "optionally" return the list in case it's needed
             # outside of module (e.g. tests).
-            return joke_types
+            return JOKE_TYPES
         # Otherwise continue with actually updating the file AND changing the global.
 
         for i in range(tries):
-            random_ten = requests.get(url=f'{base_url}/random_ten')
+            random_ten = requests.get(url=f'{BASE_URL}/random_ten')
             jokes = random_ten.json()
             for joke in jokes:
                 if joke['type'] not in current_joke_types_lst:
                     f.write(joke['type'] + ' ')
                     current_joke_types_lst.append(joke['type'])
 
-    joke_types = [joke for joke in current_joke_types_lst]
-    return joke_types
+    JOKE_TYPES = [joke for joke in current_joke_types_lst]
+    return JOKE_TYPES
 
 
 # Task 1:
 def get_a_random_joke() -> requests.models.Response:
     """Request a random joke from the joke_api."""
-    url = f'{base_url}/random_joke'
+    url = f'{BASE_URL}/random_joke'
     response = requests.get(url=url)
 
     return response
@@ -93,7 +93,7 @@ def get_a_random_joke() -> requests.models.Response:
 # Task 1:
 def get_ten_random_jokes() -> requests.models.Response:
     """Request ten random jokes from the joke_api."""
-    url = f'{base_url}/random_ten'
+    url = f'{BASE_URL}/random_ten'
     response = requests.get(url=url)
 
     return response
@@ -104,7 +104,7 @@ def get_a_random_joke_by_type(joke_type: str) -> requests.models.Response:
     """Request a random joke of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
-    url = f'{base_url}/jokes/{joke_type}/random'
+    url = f'{BASE_URL}/jokes/{joke_type}/random'
     response = requests.get(url=url)
 
     return response
@@ -115,7 +115,7 @@ def get_ten_random_jokes_by_type(joke_type: str) -> requests.models.Response:
     """Request ten random jokes of a certain category from the joke_api."""
     if not isinstance(joke_type, str):
         raise TypeError('joke_type must be a string')
-    url = f'{base_url}/jokes/{joke_type}/ten'
+    url = f'{BASE_URL}/jokes/{joke_type}/ten'
     response = requests.get(url=url)
 
     return response
@@ -129,7 +129,7 @@ def do_everything(all_joke_types: list):
     # Task 1:
     print('')
     for endpoint in endpoints:
-        url = f'{base_url}/{endpoint}'
+        url = f'{BASE_URL}/{endpoint}'
         if endpoint == 'jokes':
             url += '/programming'
             url_one = f'{url}/random'
@@ -149,7 +149,7 @@ def do_everything(all_joke_types: list):
     # Task 3:
     chosen_joke_type = random.randint(0, len(all_joke_types) - 1)
 
-    url = f'{base_url}/jokes/{all_joke_types[chosen_joke_type]}/ten'
+    url = f'{BASE_URL}/jokes/{all_joke_types[chosen_joke_type]}/ten'
     response = requests.get(url=url)
 
     for joke in response.json():
@@ -157,7 +157,7 @@ def do_everything(all_joke_types: list):
             raise ResponseError('joke type received differs from the one requested')
 
     # Task 4 (matter of choice: print only even id jokes):
-    url = f'{base_url}/{endpoints[1]}'
+    url = f'{BASE_URL}/{endpoints[1]}'
     response = requests.get(url=url)
 
     for joke in response.json():
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     # Only use update_file=True when actually needed. It takes a while to update
     # the file.
     get_popular_joke_types(tries=1, update_file=False)
-    chosen_type = random.randint(0, len(joke_types) - 1)
+    chosen_type = random.randint(0, len(JOKE_TYPES) - 1)
 
     # Task 1 & 2:
     print('Getting a random joke.')
@@ -217,19 +217,19 @@ if __name__ == '__main__':
     res = get_ten_random_jokes()
     print_response(res.json())
     print('-' * 20)
-    print(f'Getting a {joke_types[chosen_type]} random joke.')
-    res = get_a_random_joke_by_type(joke_type=joke_types[chosen_type])
+    print(f'Getting a {JOKE_TYPES[chosen_type]} random joke.')
+    res = get_a_random_joke_by_type(joke_type=JOKE_TYPES[chosen_type])
     print_response(res.json())
     print('-' * 20)
-    print(f'Getting ten {joke_types[chosen_type]} random jokes.')
-    res = get_ten_random_jokes_by_type(joke_type=joke_types[chosen_type])
+    print(f'Getting ten {JOKE_TYPES[chosen_type]} random jokes.')
+    res = get_ten_random_jokes_by_type(joke_type=JOKE_TYPES[chosen_type])
     print_response(res.json())
     print('-' * 20)
 
     # Task 3:
-    res = get_ten_random_jokes_by_type(joke_type=joke_types[chosen_type])
+    res = get_ten_random_jokes_by_type(joke_type=JOKE_TYPES[chosen_type])
     for jk in res.json():
-        if jk['type'] != joke_types[chosen_type]:
+        if jk['type'] != JOKE_TYPES[chosen_type]:
             raise ResponseError('joke type received differs from the one requested')
 
     # Task 4 (matter of choice: print only even id jokes):
