@@ -6,10 +6,10 @@ def custom_decorator(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print("The function has not run yet.")
-        func(*args, **kwargs)
+        return_value = func(*args, **kwargs)
         # Just in case the function's return is needed.
         print("The function has run successfully")
-        return func(*args, **kwargs)
+        return return_value
     return wrapper()
 
 
