@@ -8,8 +8,8 @@ def custom_decorator(func):
         print("The function has not run yet.")
         func(*args, **kwargs)
         # Just in case the function's return is needed.
-        return func(*args, **kwargs)
         print("The function has run successfully")
+        return func(*args, **kwargs)
     return wrapper()
 
 
