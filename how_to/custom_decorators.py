@@ -1,7 +1,14 @@
+import functools
+
+
 def custom_decorator(func):
-    def wrapper():
+    # This decorator helps in clarifying the passed function's identity.
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
         print("The function has not run yet.")
-        func()
+        func(*args, **kwargs)
+        # Just in case the function's return is needed.
+        return func(*args, **kwargs)
         print("The function has run successfully")
     return wrapper()
 
