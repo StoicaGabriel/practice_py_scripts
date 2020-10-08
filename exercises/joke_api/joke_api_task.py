@@ -1,5 +1,6 @@
 import requests
 import random
+import pathlib
 import pprint
 
 """How joke_api endpoints work
@@ -31,6 +32,7 @@ BASE_URL = 'https://official-joke-api.appspot.com'
 # Will keep JOKE_TYPES all caps because it becomes a constant at a certain point
 # in the code.
 JOKE_TYPES = []
+JOKE_TYPES_FILE_PATH = pathlib.Path(__file__, '..', 'joke_types.txt')
 
 
 class ResponseError(Exception):
@@ -57,7 +59,7 @@ def get_popular_joke_types(tries: int = 10, update_file: bool = False) -> list:
     if not isinstance(update_file, bool):
         raise TypeError('`only_read` parameter can be either `True` or `False`')
 
-    with open('joke_types.txt', 'r+') as f:
+    with open(JOKE_TYPES_FILE_PATH, 'r+') as f:
         JOKE_TYPES = ''
         for line in f:
             JOKE_TYPES += line
