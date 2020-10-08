@@ -28,6 +28,8 @@ will always return a dict object containing one joke.
 
 # Global vars
 BASE_URL = 'https://official-joke-api.appspot.com'
+# Will keep JOKE_TYPES all caps because it becomes a constant at a certain point
+# in the code.
 JOKE_TYPES = []
 
 
