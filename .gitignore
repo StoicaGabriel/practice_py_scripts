@@ -3,3 +3,4 @@ venv
 .idea
 .gitattributes
 __pycache__
+.coverage
