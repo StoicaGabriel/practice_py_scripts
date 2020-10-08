@@ -3,12 +3,14 @@ from abc import ABC, abstractmethod
 
 
 class Bicycle:
+    """Class for bicycle objects. The __init__ method is the actual interface."""
     def __init__(self, factory):
         self.tires = factory().add_tires()
         self.frame = factory().add_frame()
 
 
 class BaseFactory(ABC):
+    """Abstract Factory class. The two abstract methods are factory methods."""
     @abstractmethod
     def add_tires(self):
         pass
@@ -19,15 +21,18 @@ class BaseFactory(ABC):
 
 
 class BaseTires(ABC):
+    """Abstract class for tires component. This is part of the product."""
     def part_type(self):
         pass
 
 
 class BaseFrame(ABC):
+    """Abstract class for frame component. This is also part of the product."""
     def part_type(self):
         pass
 
 
+# Factory methods for different types of bike.
 class GenericFactory(BaseFactory):
     def add_tires(self):
         return GenericTires()
@@ -52,6 +57,7 @@ class RoadFactory(BaseFactory):
         return LightFrame()
 
 
+# Products for different types of tires.
 class GenericTires(BaseTires):
     def part_type(self):
         return 'generic_tires'
@@ -67,6 +73,7 @@ class RoadTires(BaseTires):
         return 'road_tires'
 
 
+# Products for different types of frames.
 class GenericFrame(BaseFrame):
     def part_type(self):
         return 'generic_frame'
