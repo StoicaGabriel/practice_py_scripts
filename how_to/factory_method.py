@@ -1,4 +1,4 @@
-# Basic example of a factory method pattern implementation.
+# Basic example of an abstract factory pattern implementation.
 from abc import ABC, abstractmethod
 
 
