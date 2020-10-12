@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 import pytest
 from exercises.joke_api import get_popular_joke_types
 from exercises.joke_api import get_a_random_joke, get_ten_random_jokes
@@ -11,7 +13,8 @@ def test_get_popular_joke_types_basic():
     have not been registered via the `get_popular_joke_types()` method, which
     will cause the test to fail."""
     joke_types = ''
-    with open('joke_types.txt', 'r') as f:
+    path_to_file = Path(os.path.abspath(__file__)).parents[1]
+    with open(str(path_to_file) + '/joke_types.txt', 'r') as f:
         for line in f:
             joke_types += line
     # Note: there is always a blank at the end of the file, so no `.split(' ')`.
