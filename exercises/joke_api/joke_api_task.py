@@ -1,6 +1,7 @@
+import os
 import requests
 import random
-import pathlib
+from pathlib import Path
 import pprint
 
 """How joke_api endpoints work
@@ -32,7 +33,8 @@ BASE_URL = 'https://official-joke-api.appspot.com'
 # Will keep JOKE_TYPES all caps because it becomes a constant at a certain point
 # in the code.
 JOKE_TYPES = []
-JOKE_TYPES_FILE_PATH = pathlib.Path(__file__, '..', 'joke_types.txt')
+JOKE_TYPES_FILE_PATH = (
+        str(Path(os.path.abspath(__file__)).parents[0]) + '/joke_types.txt')
 
 
 class ResponseError(Exception):
